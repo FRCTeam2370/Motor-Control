@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -19,6 +20,7 @@ public class ControlSubsystem extends SubsystemBase {
 
   private static VelocityDutyCycle velocityDutyCycle = new VelocityDutyCycle(0);
   private static PositionDutyCycle positionDutyCycle = new PositionDutyCycle(0);
+  private static MotionMagicDutyCycle magicDutyCycle = new MotionMagicDutyCycle(0);
 
   /** Creates a new ControlSubsystem. */
   public ControlSubsystem() {
@@ -49,6 +51,10 @@ public class ControlSubsystem extends SubsystemBase {
     compassMotor.setControl(positionDutyCycle.withPosition(rotations).withSlot(1));
   }
 
+  public static void setCompassPositionMagically(double rotations){
+    compassMotor.setControl(magicDutyCycle.withPosition(rotations).withSlot(1));
+  }
+
   private static void ConfigCompass(){
     compassMotor.setPosition(0);
 
@@ -59,6 +65,9 @@ public class ControlSubsystem extends SubsystemBase {
     compassConfig.Slot1.kP = 0.01;//power / oomph
     compassConfig.Slot1.kI = 0.0;//power over time
     compassConfig.Slot1.kD = 0.0;//smoothening towards setpoint
+
+    compassConfig.MotionMagic.MotionMagicAcceleration = 40;
+    compassConfig.MotionMagic.MotionMagicCruiseVelocity = 80;
 
     compassMotor.getConfigurator().apply(compassConfig);//applies config to motor
   }
