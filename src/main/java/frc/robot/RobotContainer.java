@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.SetCompassSpeed;
+import frc.robot.commands.SetCompassVelocity;
 import frc.robot.subsystems.ControlSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,6 +47,8 @@ public class RobotContainer {
   private void configureBindings() {
     driver.a().whileTrue(new SetCompassSpeed(mControlSubsystem, 50));
     driver.b().whileTrue(new SetCompassSpeed(mControlSubsystem, -50));
+    driver.x().whileTrue(new SetCompassVelocity(20, mControlSubsystem));
+    driver.y().whileTrue(new SetCompassVelocity(-20, mControlSubsystem));
   }
 
   /**
